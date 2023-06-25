@@ -20,7 +20,7 @@ import torch.nn.functional as F
 from torch.nn import BCEWithLogitsLoss, MSELoss
 from torch.utils.data import DataLoader
 from torchvision.utils import make_grid
-from networks.my_net import MCNet3d_v2
+from networks.my_net import LeFeD_Net
 from dataloaders import utils
 from utils import ramps, losses, metrics
 from dataloaders.la_heart import LAHeart, RandomCrop, CenterCrop, RandomRotFlip, ToTensor, TwoStreamBatchSampler
@@ -112,7 +112,7 @@ if __name__ == "__main__":
 
     def create_model(ema=False):
         # Network definition
-        net = MCNet3d_v2(n_channels=1, n_classes=num_classes, normalization='batchnorm', has_dropout=True)
+        net = LeFeD_Net(n_channels=1, n_classes=num_classes, normalization='batchnorm', has_dropout=True)
         model = net.cuda()
         if ema:
             for param in model.parameters():
