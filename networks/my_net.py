@@ -345,27 +345,9 @@ class VNet(nn.Module):
         out_seg1 = self.decoder1(features)
         return out_seg1
 
-class MCNet3d_v1(nn.Module):
-    def __init__(self, n_channels=3, n_classes=2, n_filters=16, normalization='none', has_dropout=False, has_residual=False):
-        super(MCNet3d_v1, self).__init__()
 
-        self.encoder = Encoder(n_channels, n_classes, n_filters,normalization,  has_dropout, has_residual)
-        self.decoder1 = Decoder(n_channels, n_classes, n_filters, normalization, has_dropout, has_residual, 0)
-        self.decoder2 = Decoder(n_channels, n_classes, n_filters, normalization, has_dropout, has_residual, 1)
-        self.decoder3 = Decoder(n_channels, n_classes, n_filters, normalization, has_dropout, has_residual, 2)
-        self.sideconv1 = SideConv()
-        self.sideconv2 = SideConv()
     
-    def forward(self, input):
-        features = self.encoder(input)
-        out_seg1, stage_feat1 = self.decoder1(features)
-        out_seg2, stage_feat2 = self.decoder2(features)
-        out_seg3, stage_feat3 = self.decoder3(features, stage_feat1, stage_feat2)
-        deep_out1 = self.sideconv1(stage_feat1)
-        deep_out2 = self.sideconv2(stage_feat2)
-        return out_seg1, out_seg2, out_seg3, deep_out1, deep_out2
-    
-class MCNet3d_v2(nn.Module):
+class LeFeD_Net(nn.Module):
     def __init__(self, n_channels=3, n_classes=2, n_filters=16, normalization='none', has_dropout=False, has_residual=False):
         super(MCNet3d_v2, self).__init__()
 
