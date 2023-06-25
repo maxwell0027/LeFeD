@@ -1,7 +1,7 @@
 import os
 import argparse
 import torch
-from networks.my_net import MCNet3d_v2
+from networks.my_net import LeFeD_Net
 from test_util import test_all_case
 from collections import OrderedDict
 
@@ -35,7 +35,7 @@ image_list = [FLAGS.root_path + "/" + item.replace('\n', '') + "/mri_norm2.h5" f
 
 
 def test_calculate_metric():
-    net = MCNet3d_v2(n_channels=1, n_classes=num_classes,
+    net = LeFeD_Net(n_channels=1, n_classes=num_classes,
                normalization='batchnorm', has_dropout=False).cuda()
     save_mode_path = os.path.join('/data/userdisk1/qjzeng/semi_seg/DTC-master/model/LA_16/', 'best.pth')           
     state_dict = torch.load(save_mode_path)
