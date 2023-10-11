@@ -144,7 +144,8 @@ if __name__ == "__main__":
 
     optimizer = optim.SGD(model.parameters(), lr=base_lr,
                           momentum=0.9, weight_decay=0.0001)
-    ce_loss = BCEWithLogitsLoss()
+    #ce_loss = BCEWithLogitsLoss()
+    ce_loss = nn.CrossEntropyLoss(reduction='mean')
     mse_loss = MSELoss()
 
 
@@ -198,6 +199,7 @@ if __name__ == "__main__":
                 # supervised loss
                 loss_sup1 = losses.dice_loss(outputs_soft1[:labeled_bs, 1, :, :, :], label_batch[:labeled_bs] == 1)
                 loss_sup2 = losses.dice_loss(outputs_soft2[:labeled_bs, 1, :, :, :], label_batch[:labeled_bs] == 1)
+                #loss_sup2 = torch.mean(ce_loss(outputs2[:labeled_bs], label_batch[:labeled_bs]))
                 #loss_sup2 = -torch.sum(label_batch[:labeled_bs]*(outputs_soft2[:labeled_bs, 1, :, :, :]+1e-6).log()) / (torch.sum(label_batch[:labeled_bs])+ 1e-6) \
                            #-torch.sum((1.-label_batch[:labeled_bs])*(1.-outputs_soft2[:labeled_bs, 1, :, :, :]+1e-6).log()) / (torch.sum(1.-label_batch[:labeled_bs]) + 1e-6)
                 loss_sup = loss_sup1 + loss_sup2
