@@ -208,7 +208,7 @@ if __name__ == "__main__":
                 los3 = losses.dice_loss(out3_soft[:labeled_bs, 1, :, :, :], label_batch[:labeled_bs] == 1)
                 los4 = losses.dice_loss(out4_soft[:labeled_bs, 1, :, :, :], label_batch[:labeled_bs] == 1)
                 los5 = losses.dice_loss(out5_soft[:labeled_bs, 1, :, :, :], label_batch[:labeled_bs] == 1)
-                los = (los1 + los2 + los3 + los4 + los5) / 5.
+                los = 0.8*los1 + 0.6*los2 + 0.4*los3 + 0.2*los4 + 0.1*los5
                 
                 loss_ds = los
                 
