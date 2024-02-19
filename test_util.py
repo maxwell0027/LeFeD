@@ -95,8 +95,10 @@ def test_single_case(net, image, stride_xy, stride_z, patch_size, num_classes=1)
                 with torch.no_grad():
                     y, y1, _ , _, _ = net(test_patch, [])
                     # ensemble
-                    y1 = (y + y1)/2
-                    y = F.softmax(y1, dim=1)
+                    #y1 = (y + y1)/2
+                    #y = F.softmax(y1, dim=1)
+                    # strong
+                    y = F.softmax(y, dim=1)
                     
                 y = y.cpu().data.numpy()
                 y = y[0, :, :, :, :]
